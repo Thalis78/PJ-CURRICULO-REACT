@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 declare var html2pdf: any;
 
 type ThemeColor = "blue" | "rose" | "green" | "purple" | "gray";
