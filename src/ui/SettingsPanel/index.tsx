@@ -8,7 +8,6 @@ const SettingsPanel = () => {
   const [color, setColor] = useState<ThemeColor>("blue");
   const [pdfName, setPdfName] = useState("curriculo");
   const [isOpen, setIsOpen] = useState(false);
-  const [profileImage, setProfileImage] = useState<string>("img.png");
 
   useEffect(() => {
     const fontMap: any = {
@@ -33,17 +32,6 @@ const SettingsPanel = () => {
     const content = document.getElementById("pdf-content");
     if (content) content.style.backgroundColor = selectedColor;
   }, [color]);
-
-  const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setProfileImage(reader.result as string);
-      };
-      if (file) reader.readAsDataURL(file);
-    }
-  };
 
   const handlePdf = () => {
     const element = document.getElementById("pdf-content");
