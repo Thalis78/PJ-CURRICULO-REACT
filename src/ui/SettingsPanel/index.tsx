@@ -8,6 +8,7 @@ const SettingsPanel = () => {
   const [color, setColor] = useState<ThemeColor>("blue");
   const [pdfName, setPdfName] = useState("curriculo");
   const [isOpen, setIsOpen] = useState(false);
+  const [profileImage, setProfileImage] = useState<string>("img.png");
 
   useEffect(() => {
     const fontMap: any = {
@@ -20,51 +21,56 @@ const SettingsPanel = () => {
   }, [font]);
 
   useEffect(() => {
-    const colorMap: Record<ThemeColor, [string, string]> = {
-      blue: ["bg-blue-600", "bg-blue-200"],
-      rose: ["bg-rose-600", "bg-rose-200"],
-      green: ["bg-green-600", "bg-green-200"],
-      purple: ["bg-purple-600", "bg-purple-200"],
-      gray: ["bg-gray-600", "bg-gray-200"],
+    const colorMap: Record<ThemeColor, string> = {
+      blue: "#3b82f6",
+      rose: "#f43f5e",
+      green: "#10b981",
+      purple: "#8b5cf6",
+      gray: "#9ca3af",
     };
 
-    const selected = colorMap[color] || colorMap["blue"];
-    const header = document.getElementById("header");
-    const leftColumn = document.getElementById("left-column");
-
-    Object.values(colorMap).forEach(([headerColor, columnColor]) => {
-      if (header) header.classList.remove(headerColor);
-      if (leftColumn) leftColumn.classList.remove(columnColor);
-    });
-
-    if (header) header.classList.add(selected[0]);
-    if (leftColumn) leftColumn.classList.add(selected[1]);
+    const selectedColor = colorMap[color] || colorMap["blue"];
+    const content = document.getElementById("pdf-content");
+    if (content) content.style.backgroundColor = selectedColor;
   }, [color]);
+
+  const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setProfileImage(reader.result as string);
+      };
+      if (file) reader.readAsDataURL(file);
+    }
+  };
 
   const handlePdf = () => {
     const element = document.getElementById("pdf-content");
-    const noPrints = document.querySelectorAll(".no-print");
-    noPrints.forEach((el) => ((el as HTMLElement).style.display = "none"));
 
     setTimeout(() => {
       html2pdf()
         .set({
-          margin: 0,
+          margin: 10,
           filename: `${pdfName}.pdf`,
           image: { type: "jpeg", quality: 0.98 },
           html2canvas: {
             scale: 2,
             scrollY: 0,
-            windowWidth: 794,
-            windowHeight: element?.scrollHeight,
+            windowWidth: window.innerWidth,
+            windowHeight: element?.scrollHeight || 800,
           },
           jsPDF: { unit: "mm", format: "a4", orientation: "portrait" },
         })
         .from(element)
-        .save()
-        .then(() => {
-          noPrints.forEach((el) => ((el as HTMLElement).style.display = ""));
-        });
+        .toPdf((pdf: any) => {
+          const pageHeight = pdf.internal.pageSize.height;
+          const contentHeight = element?.scrollHeight || 0;
+          if (contentHeight > pageHeight) {
+            pdf.deletePage(2);
+          }
+        })
+        .save();
     }, 300);
   };
 
