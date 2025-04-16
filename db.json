@@ -1,6 +1,7 @@
 {
     "curriculo": {
       "nome": "Marcia Nogueira",
+      "imagem": "https://images.pexels.com/photos/1102341/pexels-photo-1102341.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
       "contato": {
         "endereco": "Rua das Flores, 123 - São Paulo, SP",
         "telefone": "(11) 91234-5678",

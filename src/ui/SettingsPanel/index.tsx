@@ -34,32 +34,46 @@ const SettingsPanel = () => {
   }, [fontSize]);
 
   const handlePdf = () => {
-    const element = document.getElementById("pdf-content");
+    const content = document.getElementById("pdf-content");
+    if (!content) return;
 
-    setTimeout(() => {
-      html2pdf()
-        .set({
-          margin: 10,
-          filename: `${pdfName}.pdf`,
-          image: { type: "jpeg", quality: 1 },
-          html2canvas: {
-            scale: 10,
-            scrollY: 0,
-            windowWidth: window.innerWidth,
-            windowHeight: element?.scrollHeight || 800,
-          },
-          jsPDF: { unit: "mm", format: "a4", orientation: "portrait" },
-        })
-        .from(element)
-        .toPdf((pdf: any) => {
-          const pageHeight = pdf.internal.pageSize.height;
-          const contentHeight = element?.scrollHeight || 0;
-          if (contentHeight > pageHeight) {
-            pdf.deletePage(2);
-          }
-        })
-        .save();
-    }, 300);
+    const printContainer = document.createElement("div");
+    const clone = content.cloneNode(true) as HTMLElement;
+
+    printContainer.appendChild(clone);
+    document.body.appendChild(printContainer);
+
+    printContainer.style.width = "794px";
+    printContainer.style.margin = "0 auto";
+    printContainer.style.padding = "20px";
+    printContainer.style.background = "white";
+
+    clone.style.width = "100%";
+    clone.style.boxSizing = "border-box";
+
+    const isMobile = window.innerWidth <= 800;
+
+    html2pdf()
+      .set({
+        margin: 0,
+        filename: `${pdfName}.pdf`,
+        image: { type: "jpeg", quality: 0.98 },
+        html2canvas: {
+          scale: 2,
+          scrollY: 0,
+          windowWidth: isMobile ? 794 : window.innerWidth,
+        },
+        jsPDF: {
+          unit: "mm",
+          format: "a4",
+          orientation: "portrait",
+        },
+      })
+      .from(printContainer)
+      .save()
+      .then(() => {
+        printContainer.remove();
+      });
   };
 
   const toggleSettings = () => {
@@ -67,7 +81,7 @@ const SettingsPanel = () => {
   };
 
   return (
-    <div className="relative w-full  py-6 px-4 lg:px-6  rounded-lg">
+    <div className="relative w-full py-6 px-4 lg:px-6 rounded-lg">
       <div className="absolute top-0 right-0 mr-4 mt-4">
         <button
           onClick={toggleSettings}
@@ -103,8 +117,9 @@ const SettingsPanel = () => {
           </label>
           <select
             id="fontSelect"
-            className="border border-gray-300 rounded-lg px-4 py-3 text-sm focus:ring-2 focus:ring-blue-500 transition duration-200 ease-in-out"
+            className="border border-gray-300 rounded-lg px-4 py-3 text-sm focus:ring-2 focus:ring-blue-500"
             onChange={(e) => setFont(e.target.value)}
+            value={font}
           >
             <option value="font-inter">Inter</option>
             <option value="font-georgia">Georgia</option>
@@ -127,7 +142,7 @@ const SettingsPanel = () => {
             id="fontSizePx"
             value={fontSize}
             onChange={(e) => setFontSize(e.target.value)}
-            className="border border-gray-300 rounded-lg px-4 py-3 text-sm focus:ring-2 focus:ring-blue-500 transition duration-200 ease-in-out"
+            className="border border-gray-300 rounded-lg px-4 py-3 text-sm focus:ring-2 focus:ring-blue-500"
             min={8}
             max={72}
           />
@@ -143,7 +158,7 @@ const SettingsPanel = () => {
             placeholder="Ex: marcia-nogue.pdf"
             value={pdfName}
             onChange={(e) => setPdfName(e.target.value)}
-            className="border border-gray-300 rounded-lg px-4 py-3 text-sm focus:ring-2 focus:ring-blue-500 transition duration-200 ease-in-out"
+            className="border border-gray-300 rounded-lg px-4 py-3 text-sm focus:ring-2 focus:ring-blue-500"
           />
         </div>
 
