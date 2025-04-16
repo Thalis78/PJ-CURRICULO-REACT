@@ -1,7 +1,13 @@
 import { useState, useEffect } from "react";
 declare var html2pdf: any;
 
-const SettingsPanel = () => {
+const SettingsPanel = ({
+  imageShape,
+  setImageShape,
+}: {
+  imageShape: string;
+  setImageShape: (value: string) => void;
+}) => {
   const [fontSize, setFontSize] = useState("16");
   const [font, setFont] = useState("font-inter");
   const [pdfName, setPdfName] = useState("curriculo");
@@ -57,7 +63,7 @@ const SettingsPanel = () => {
       .set({
         margin: 0,
         filename: `${pdfName}.pdf`,
-        image: { type: "jpeg", quality: 0.98 },
+        image: { type: "jpeg", quality: 1 },
         html2canvas: {
           scale: 2,
           scrollY: 0,
@@ -89,14 +95,24 @@ const SettingsPanel = () => {
         >
           {isOpen ? (
             <>
-              <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg
+                className="w-5 h-5 mr-2"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
                 <path d="M6 18L18 6M6 6l12 12" />
               </svg>
               <span className="font-semibold">Fechar Configurações</span>
             </>
           ) : (
             <>
-              <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg
+                className="w-5 h-5 mr-2"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
                 <path d="M3 12h18M12 3v18" />
               </svg>
               <span className="font-semibold">Abrir Configurações</span>
@@ -106,13 +122,17 @@ const SettingsPanel = () => {
       </div>
 
       <div
-        className={`transition-all duration-300 ease-in-out transform ${isOpen
-          ? "opacity-100 translate-y-0 block"
-          : "opacity-0 translate-y-4 hidden"
-          } max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-6`}
+        className={`transition-all duration-300 ease-in-out transform ${
+          isOpen
+            ? "opacity-100 translate-y-0 block"
+            : "opacity-0 translate-y-4 hidden"
+        } max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-6`}
       >
         <div className="flex flex-col">
-          <label htmlFor="fontSelect" className="text-sm font-semibold text-gray-700 mb-2">
+          <label
+            htmlFor="fontSelect"
+            className="text-sm font-semibold text-gray-700 mb-2"
+          >
             Fonte
           </label>
           <select
@@ -134,7 +154,10 @@ const SettingsPanel = () => {
         </div>
 
         <div className="flex flex-col">
-          <label htmlFor="fontSizePx" className="text-sm font-semibold text-gray-700 mb-2">
+          <label
+            htmlFor="fontSizePx"
+            className="text-sm font-semibold text-gray-700 mb-2"
+          >
             Tamanho da Fonte (px)
           </label>
           <input
@@ -149,7 +172,10 @@ const SettingsPanel = () => {
         </div>
 
         <div className="flex flex-col">
-          <label htmlFor="pdfName" className="text-sm font-semibold text-gray-700 mb-2">
+          <label
+            htmlFor="pdfName"
+            className="text-sm font-semibold text-gray-700 mb-2"
+          >
             Nome do PDF
           </label>
           <input
@@ -162,14 +188,35 @@ const SettingsPanel = () => {
           />
         </div>
 
-        <div className="flex justify-center sm:justify-end items-center col-span-full mt-4">
-          <button
-            id="btn-pdf"
-            className="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 shadow-md transition duration-200 ease-in-out"
-            onClick={handlePdf}
-          >
-            📄 Salvar como PDF
-          </button>
+        <div className="flex flex-col lg:flex-row items-center justify-between col-span-full mt-4">
+          <div className="flex flex-col w-full sm:w-1/2 lg:w-auto">
+            <label
+              htmlFor="imageShape"
+              className="text-sm font-semibold text-gray-700 mb-2"
+            >
+              Formato da Imagem
+            </label>
+            <select
+              id="imageShape"
+              className="border border-gray-300 rounded-lg px-4 py-3 text-sm focus:ring-2 focus:ring-blue-500"
+              onChange={(e) => setImageShape(e.target.value)}
+              value={imageShape}
+            >
+              <option value="round">Redonda</option>
+              <option value="square">Quadrada</option>
+              <option value="none">Sem Imagem</option>
+            </select>
+          </div>
+
+          <div className="flex justify-center sm:justify-end items-center mt-4 lg:mt-0 lg:ml-4">
+            <button
+              id="btn-pdf"
+              className="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 shadow-md transition duration-200 ease-in-out"
+              onClick={handlePdf}
+            >
+              📄 Salvar como PDF
+            </button>
+          </div>
         </div>
       </div>
     </div>

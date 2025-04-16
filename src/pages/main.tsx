@@ -4,18 +4,23 @@ import { Header } from "../ui/header";
 import { SettingsPanel } from "../ui/SettingsPanel";
 import { Curriculum } from "../ui";
 import { Spinner } from "../ui/spinner";
+import { useLocation } from "react-router-dom";
 
 const Main = () => {
+  const [imageShape, setImageShape] = useState("round");
   const { curriculo, getCurriculo } = useCurriculo();
   const [loading, setLoading] = useState(true);
+  const { state } = useLocation();
 
   useEffect(() => {
-    if (!curriculo) {
+    if (state?.curriculo) {
+      setLoading(false);
+    } else if (!curriculo) {
       getCurriculo();
     } else {
       setLoading(false);
     }
-  }, [curriculo, getCurriculo]);
+  }, [curriculo, getCurriculo, state]);
 
   if (loading) {
     return <Spinner />;
@@ -24,8 +29,11 @@ const Main = () => {
   return (
     <>
       <Header />
-      <SettingsPanel />
-      <Curriculum dadosCurriculo={curriculo} />
+      <SettingsPanel imageShape={imageShape} setImageShape={setImageShape} />
+      <Curriculum
+        dadosCurriculo={state?.curriculo || curriculo}
+        imageShape={imageShape}
+      />
     </>
   );
 };
