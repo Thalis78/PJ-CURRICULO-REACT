@@ -1,5 +1,4 @@
 import { Header } from "../ui/header";
-import { ProfessionalResume } from "../ui/modelosCurriculos";
 import { SettingsPanel } from "../ui/SettingsPanel";
 
 const Main = () => {
@@ -7,7 +6,6 @@ const Main = () => {
     <>
       <Header />
       <SettingsPanel />
-      <ProfessionalResume />
     </>
   );
 };
