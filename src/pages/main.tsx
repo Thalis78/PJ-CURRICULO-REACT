@@ -1,13 +1,19 @@
-import { Header } from "../ui/header";
-import { SettingsPanel } from "../ui/SettingsPanel";
-
+import { useEffect } from "react";
+import { useCurriculo } from "../modules/hooks/use-curriculo";
 const Main = () => {
-  return (
-    <>
-      <Header />
-      <SettingsPanel />
-    </>
-  );
+  const { curriculo, getCurriculo } = useCurriculo();
+
+  useEffect(() => {
+    if (!curriculo) {
+      getCurriculo();
+    }
+  }, [curriculo, getCurriculo]);
+
+  if (!curriculo) {
+    return <div>Carregando...</div>;
+  }
+  console.log(curriculo);
+
 };
 
 export { Main };
