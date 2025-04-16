@@ -134,6 +134,9 @@ const Curriculum = ({ dadosCurriculo, imageShape }: any) => {
             )}
           </main>
         </div>
+
+        <div className="h-10"></div>
+
         <div className="flex justify-center mb-8">
           <button
             id="btn-pdf"

@@ -30,6 +30,7 @@ const Main = () => {
     <>
       <Header />
       <SettingsPanel imageShape={imageShape} setImageShape={setImageShape} />
+      <div className="h-10"></div>
       <Curriculum
         dadosCurriculo={state?.curriculo || curriculo}
         imageShape={imageShape}
