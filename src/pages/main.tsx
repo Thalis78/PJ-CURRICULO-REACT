@@ -3,6 +3,7 @@ import { useCurriculo } from "../modules/hooks/use-curriculo";
 import { Header } from "../ui/header";
 import { SettingsPanel } from "../ui/SettingsPanel";
 import { Curriculum } from "../ui";
+import { Spinner } from "../ui/spinner";
 
 const Main = () => {
   const { curriculo, getCurriculo } = useCurriculo();
@@ -12,13 +13,12 @@ const Main = () => {
     if (!curriculo) {
       getCurriculo();
     } else {
-      setLoading(false);  // Dados carregados, então o loading pode ser removido
+      setLoading(false);
     }
   }, [curriculo, getCurriculo]);
 
-  // Se ainda estiver carregando, exibe uma mensagem ou spinner.
   if (loading) {
-    return <div>Carregando...</div>;
+    return <Spinner />;
   }
 
   return (
