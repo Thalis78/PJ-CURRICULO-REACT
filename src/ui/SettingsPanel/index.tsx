@@ -1,11 +1,9 @@
 import { useState, useEffect } from "react";
 declare var html2pdf: any;
 
-type ThemeColor = "blue" | "rose" | "green" | "purple" | "gray";
-
 const SettingsPanel = () => {
+  const [fontSize, setFontSize] = useState("text-base");
   const [font, setFont] = useState("font-inter");
-  const [color, setColor] = useState<ThemeColor>("blue");
   const [pdfName, setPdfName] = useState("curriculo");
   const [isOpen, setIsOpen] = useState(false);
 
@@ -20,18 +18,12 @@ const SettingsPanel = () => {
   }, [font]);
 
   useEffect(() => {
-    const colorMap: Record<ThemeColor, string> = {
-      blue: "#3b82f6",
-      rose: "#f43f5e",
-      green: "#10b981",
-      purple: "#8b5cf6",
-      gray: "#9ca3af",
-    };
-
-    const selectedColor = colorMap[color] || colorMap["blue"];
     const content = document.getElementById("pdf-content");
-    if (content) content.style.backgroundColor = selectedColor;
-  }, [color]);
+    if (content) {
+      content.classList.remove("text-sm", "text-base", "text-lg");
+      content.classList.add(fontSize);
+    }
+  }, [fontSize]);
 
   const handlePdf = () => {
     const element = document.getElementById("pdf-content");
@@ -41,9 +33,9 @@ const SettingsPanel = () => {
         .set({
           margin: 10,
           filename: `${pdfName}.pdf`,
-          image: { type: "jpeg", quality: 0.98 },
+          image: { type: "jpeg", quality: 1 },
           html2canvas: {
-            scale: 2,
+            scale: 10,
             scrollY: 0,
             windowWidth: window.innerWidth,
             windowHeight: element?.scrollHeight || 800,
@@ -114,7 +106,7 @@ const SettingsPanel = () => {
           isOpen
             ? "opacity-100 translate-y-0 block"
             : "opacity-0 translate-y-4 hidden"
-        } max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 mt-8`}
+        } max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 mt-8`}
       >
         <div className="flex flex-col">
           <label
@@ -131,26 +123,6 @@ const SettingsPanel = () => {
             <option value="font-inter">Inter</option>
             <option value="font-georgia">Georgia</option>
             <option value="font-playfair">Playfair Display</option>
-          </select>
-        </div>
-
-        <div className="flex flex-col">
-          <label
-            htmlFor="colorSelect"
-            className="text-sm font-semibold text-gray-700 mb-2"
-          >
-            Cor do Currículo
-          </label>
-          <select
-            id="colorSelect"
-            className="border border-gray-300 rounded-lg px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-200 ease-in-out"
-            onChange={(e) => setColor(e.target.value as ThemeColor)}
-          >
-            <option value="blue">Azul</option>
-            <option value="rose">Rosa</option>
-            <option value="green">Verde</option>
-            <option value="purple">Roxo</option>
-            <option value="gray">Cinza</option>
           </select>
         </div>
 
