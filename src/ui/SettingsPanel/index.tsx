@@ -67,25 +67,25 @@ const SettingsPanel = () => {
   };
 
   return (
-    <div className="relative w-full bg-white border-b border-gray-200 shadow-lg py-8 px-6 lg:px-8">
+    <div className="relative w-full  py-6 px-4 lg:px-6  rounded-lg">
       <div className="absolute top-0 right-0 mr-4 mt-4">
         <button
           onClick={toggleSettings}
-          className="flex items-center text-gray-600 hover:text-blue-600 focus:outline-none transition-all duration-300 ease-in-out p-2 rounded-full shadow-sm"
+          className="flex items-center text-gray-600 hover:text-blue-600 focus:outline-none p-3 rounded-full shadow-md transition-all duration-200 ease-in-out"
         >
           {isOpen ? (
             <>
               <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path d="M6 18L18 6M6 6l12 12" />
               </svg>
-              <span>Fechar Configurações</span>
+              <span className="font-semibold">Fechar Configurações</span>
             </>
           ) : (
             <>
               <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path d="M3 12h18M12 3v18" />
               </svg>
-              <span>Abrir Configurações</span>
+              <span className="font-semibold">Abrir Configurações</span>
             </>
           )}
         </button>
@@ -95,7 +95,7 @@ const SettingsPanel = () => {
         className={`transition-all duration-300 ease-in-out transform ${isOpen
           ? "opacity-100 translate-y-0 block"
           : "opacity-0 translate-y-4 hidden"
-          } max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 mt-8`}
+          } max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-6`}
       >
         <div className="flex flex-col">
           <label htmlFor="fontSelect" className="text-sm font-semibold text-gray-700 mb-2">
@@ -103,7 +103,7 @@ const SettingsPanel = () => {
           </label>
           <select
             id="fontSelect"
-            className="border border-gray-300 rounded-lg px-4 py-3 text-sm focus:ring-2 focus:ring-blue-500"
+            className="border border-gray-300 rounded-lg px-4 py-3 text-sm focus:ring-2 focus:ring-blue-500 transition duration-200 ease-in-out"
             onChange={(e) => setFont(e.target.value)}
           >
             <option value="font-inter">Inter</option>
@@ -116,7 +116,6 @@ const SettingsPanel = () => {
             <option value="font-merriweather">Merriweather</option>
             <option value="font-montserrat">Montserrat</option>
           </select>
-
         </div>
 
         <div className="flex flex-col">
@@ -128,7 +127,7 @@ const SettingsPanel = () => {
             id="fontSizePx"
             value={fontSize}
             onChange={(e) => setFontSize(e.target.value)}
-            className="border border-gray-300 rounded-lg px-4 py-3 text-sm focus:ring-2 focus:ring-blue-500"
+            className="border border-gray-300 rounded-lg px-4 py-3 text-sm focus:ring-2 focus:ring-blue-500 transition duration-200 ease-in-out"
             min={8}
             max={72}
           />
@@ -144,14 +143,14 @@ const SettingsPanel = () => {
             placeholder="Ex: marcia-nogue.pdf"
             value={pdfName}
             onChange={(e) => setPdfName(e.target.value)}
-            className="border border-gray-300 rounded-lg px-4 py-3 text-sm focus:ring-2 focus:ring-blue-500"
+            className="border border-gray-300 rounded-lg px-4 py-3 text-sm focus:ring-2 focus:ring-blue-500 transition duration-200 ease-in-out"
           />
         </div>
 
-        <div className="flex justify-center sm:justify-end items-center col-span-full">
+        <div className="flex justify-center sm:justify-end items-center col-span-full mt-4">
           <button
             id="btn-pdf"
-            className="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 shadow-md transition duration-200 text-base"
+            className="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 shadow-md transition duration-200 ease-in-out"
             onClick={handlePdf}
           >
             📄 Salvar como PDF
