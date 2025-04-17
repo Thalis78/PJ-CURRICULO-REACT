@@ -141,7 +141,6 @@ const SettingsPanel = ({ themeColor, setThemeColor }: SettingsPanelProps) => {
             <option value="black">Preto</option>
             <option value="pink">Rosa</option>
             <option value="green">Verde</option>
-            <option value="yellow">Amarelo</option>
             <option value="blue">Azul</option>
             <option value="purple">Roxo</option>
             <option value="orange">Laranja</option>
