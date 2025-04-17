@@ -122,7 +122,7 @@ const themeClasses: Record<string, any> = {
 const Curriculum = ({ dadosCurriculo, themeColor }: CurriculumProps) => {
   const navigate = useNavigate();
 
-  const [pdfName, setPdfName] = useState("curriculo");
+  const pdfName = "curriculo";
 
   const handleEdit = () => {
     navigate("/edit", { state: { curriculo: dadosCurriculo } });
