@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
 import { useCurriculo } from "../modules/hooks/use-curriculo";
 import { Header } from "../ui/header";
 import { SettingsPanel } from "../ui/SettingsPanel";
@@ -7,9 +7,9 @@ import { Spinner } from "../ui/spinner";
 import { useLocation } from "react-router-dom";
 
 const Main = () => {
-  const [imageShape, setImageShape] = useState("round");
   const { curriculo, getCurriculo } = useCurriculo();
   const [loading, setLoading] = useState(true);
+  const [themeColor, setThemeColor] = useState("black");
   const { state } = useLocation();
 
   useEffect(() => {
@@ -29,11 +29,11 @@ const Main = () => {
   return (
     <>
       <Header />
-      <SettingsPanel imageShape={imageShape} setImageShape={setImageShape} />
+      <SettingsPanel setThemeColor={setThemeColor} themeColor={themeColor} />
       <div className="h-10"></div>
       <Curriculum
         dadosCurriculo={state?.curriculo || curriculo}
-        imageShape={imageShape}
+        themeColor={themeColor}
       />
     </>
   );

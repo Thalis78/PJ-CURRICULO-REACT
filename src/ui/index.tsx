@@ -4,9 +4,119 @@ import {
   FaRegHandshake,
   FaUserGraduate,
   FaBullhorn,
+  FaPhone,
+  FaMapMarkerAlt,
+  FaAngleRight,
 } from "react-icons/fa";
 
-const Curriculum = ({ dadosCurriculo, imageShape }: any) => {
+type CurriculumProps = {
+  dadosCurriculo: any;
+  imageShape?: string;
+  themeColor: string;
+};
+
+const themeClasses: Record<string, any> = {
+  blue: {
+    sidebarBg: "bg-blue-600",
+    sidebarText: "text-white",
+    mainBg: "bg-blue-50",
+    mainText: "text-blue-900",
+    buttonBg: "bg-blue-600",
+  },
+  black: {
+    sidebarBg: "bg-black",
+    sidebarText: "text-white",
+    mainBg: "bg-gray-900",
+    mainText: "text-white",
+    buttonBg: "bg-black",
+  },
+  pink: {
+    sidebarBg: "bg-pink-500",
+    sidebarText: "text-white",
+    mainBg: "bg-pink-50",
+    mainText: "text-pink-900",
+    buttonBg: "bg-pink-600",
+  },
+  green: {
+    sidebarBg: "bg-green-600",
+    sidebarText: "text-white",
+    mainBg: "bg-green-50",
+    mainText: "text-green-900",
+    buttonBg: "bg-green-600",
+  },
+  yellow: {
+    sidebarBg: "bg-yellow-400",
+    sidebarText: "text-black",
+    mainBg: "bg-yellow-50",
+    mainText: "text-yellow-900",
+    buttonBg: "bg-yellow-500",
+  },
+  purple: {
+    sidebarBg: "bg-purple-600",
+    sidebarText: "text-white",
+    mainBg: "bg-purple-50",
+    mainText: "text-purple-900",
+    buttonBg: "bg-purple-600",
+  },
+  orange: {
+    sidebarBg: "bg-orange-600",
+    sidebarText: "text-white",
+    mainBg: "bg-orange-50",
+    mainText: "text-orange-900",
+    buttonBg: "bg-orange-600",
+  },
+  gray: {
+    sidebarBg: "bg-gray-600",
+    sidebarText: "text-white",
+    mainBg: "bg-gray-50",
+    mainText: "text-gray-900",
+    buttonBg: "bg-gray-600",
+  },
+  red: {
+    sidebarBg: "bg-red-600",
+    sidebarText: "text-white",
+    mainBg: "bg-red-50",
+    mainText: "text-red-900",
+    buttonBg: "bg-red-600",
+  },
+  indigo: {
+    sidebarBg: "bg-indigo-600",
+    sidebarText: "text-white",
+    mainBg: "bg-indigo-50",
+    mainText: "text-indigo-900",
+    buttonBg: "bg-indigo-600",
+  },
+  teal: {
+    sidebarBg: "bg-teal-600",
+    sidebarText: "text-white",
+    mainBg: "bg-teal-50",
+    mainText: "text-teal-900",
+    buttonBg: "bg-teal-600",
+  },
+  cyan: {
+    sidebarBg: "bg-cyan-600",
+    sidebarText: "text-white",
+    mainBg: "bg-cyan-50",
+    mainText: "text-cyan-900",
+    buttonBg: "bg-cyan-600",
+  },
+  lime: {
+    sidebarBg: "bg-lime-600",
+    sidebarText: "text-white",
+    mainBg: "bg-lime-50",
+    mainText: "text-lime-900",
+    buttonBg: "bg-lime-600",
+  },
+  rose: {
+    sidebarBg: "bg-rose-600",
+    sidebarText: "text-white",
+    mainBg: "bg-rose-50",
+    mainText: "text-rose-900",
+    buttonBg: "bg-rose-600",
+  },
+};
+
+const Curriculum = ({ dadosCurriculo, themeColor }: CurriculumProps) => {
   const navigate = useNavigate();
 
   const handleEdit = () => {
@@ -26,51 +136,63 @@ const Curriculum = ({ dadosCurriculo, imageShape }: any) => {
     [];
   const objetivo = dadosCurriculo.objetivo || "";
 
+  const theme = themeClasses[themeColor] || themeClasses.blue;
+
   return (
-    <div className="min-h-screen py-8 px-6 sm:px-8">
-      <div className="max-w-6xl mx-auto">
+    <div className="min-h-screen  py-8 px-6 sm:px-8">
+      <div className="max-w-7xl mx-auto">
         <div
           id="pdf-content"
-          className="bg-white shadow-xl rounded-xl overflow-hidden flex flex-col md:flex-row border border-gray-200 print:max-w-full print:shadow-none print:rounded-none"
+          className={`shadow-lg rounded-xl overflow-hidden flex flex-col md:flex-row border border-gray-300 ${
+            themeColor === "black" ? "text-black" : theme.mainText
+          }`}
         >
-          <aside className="bg-blue-600 text-white p-6 md:w-1/3 print:bg-blue-600">
+          <aside
+            className={`${theme.sidebarBg} ${theme.sidebarText} p-6 md:w-1/3 space-y-6`}
+          >
             <div className="flex flex-col items-center mb-6">
-              {imageShape !== "none" && (
-                <img
-                  src={
-                    dadosCurriculo.imagem || "https://via.placeholder.com/150"
-                  }
-                  alt="Foto de Perfil"
-                  className={`w-32 h-32 border-4 border-white mb-4 object-cover ${
-                    imageShape === "round" ? "rounded-full" : "rounded-none"
-                  }`}
-                />
-              )}
-              <h1 className="text-xl font-semibold text-center">
+              <div className="h-10"></div>
+              <h1 className="text-3xl font-bold text-center mb-4">
                 {dadosCurriculo.nome}
               </h1>
             </div>
 
-            <div className="text-sm space-y-4">
-              <div>
-                <h2 className="font-semibold text-lg mb-2 flex items-center">
-                  <FaEnvelope className="mr-2" />
-                  Contato
+            <div className="text-sm space-y-6">
+              <div className="space-y-2">
+                <h2 className="font-semibold text-lg flex items-center">
+                  Contato:
                 </h2>
-                <p>{dadosCurriculo.contato.email}</p>
-                <p>{dadosCurriculo.contato.telefone}</p>
-                <p>{dadosCurriculo.contato.endereco}</p>
+                <div className="space-y-2 text-sm">
+                  <p className="flex items-center gap-2">
+                    <FaEnvelope className="text-base" />
+                    {dadosCurriculo.contato.email}
+                  </p>
+                  <p className="flex items-center gap-2">
+                    <FaPhone className="text-base" />
+                    {dadosCurriculo.contato.telefone}
+                  </p>
+                  <p className="flex items-center gap-2">
+                    <FaMapMarkerAlt className="text-base" />
+                    {dadosCurriculo.contato.endereco}
+                  </p>
+                </div>
               </div>
 
               {habilidades.length > 0 && (
-                <div>
-                  <h2 className="font-semibold text-lg mb-2 flex items-center">
+                <div className="space-y-2">
+                  <h2 className="font-semibold text-lg flex items-center">
                     <FaRegHandshake className="mr-2" />
-                    Habilidades
+                    Habilidades:
                   </h2>
-                  <ul className="list-disc list-inside space-y-1">
+                  <ul className="space-y-1">
                     {habilidades.map((hab: string, idx: number) => (
-                      <li key={idx}>{hab}</li>
+                      <li
+                        key={idx}
+                        className="flex items-center gap-2 text-white"
+                      >
+                        <FaAngleRight className="text-white text-sm" />
+                        {hab}
+                      </li>
                     ))}
                   </ul>
                 </div>
@@ -78,37 +200,37 @@ const Curriculum = ({ dadosCurriculo, imageShape }: any) => {
             </div>
           </aside>
 
-          <main className="p-6 md:w-2/3 bg-blue-50 text-blue-900">
+          <main className="p-6 md:w-2/3 space-y-6">
             {objetivo && (
               <section className="mb-6">
-                <h2 className="text-2xl font-semibold border-b-2 border-blue-300 pb-2 mb-4 flex items-center">
+                <h2 className="text-2xl font-semibold border-b-2 border-opacity-30 pb-2 mb-4 flex items-center">
                   <FaBullhorn className="mr-2" />
-                  Objetivo
+                  Objetivo:
                 </h2>
-                <p className="text-gray-800">{dadosCurriculo.objetivo}</p>
+                <p>{objetivo}</p>
               </section>
             )}
 
             <section className="mb-6">
-              <h2 className="text-2xl font-semibold border-b-2 border-blue-300 pb-2 mb-4">
-                Resumo
+              <h2 className="text-2xl font-semibold border-b-2 border-opacity-30 pb-2 mb-4">
+                Resumo:
               </h2>
-              <p className="text-gray-800">{dadosCurriculo.resumo}</p>
+              <p>{dadosCurriculo.resumo}</p>
             </section>
 
             {experiencias.length > 0 && (
               <section className="mb-6">
-                <h2 className="text-2xl font-semibold border-b-2 border-blue-300 pb-2 mb-4 flex items-center">
+                <h2 className="text-2xl font-semibold border-b-2 border-opacity-30 pb-2 mb-4 flex items-center">
                   <FaRegHandshake className="mr-2" />
-                  Experiência Profissional
+                  Experiência Profissional:
                 </h2>
                 {experiencias.map((item: any, idx: number) => (
                   <div key={idx} className="mb-4">
                     <h3 className="text-lg font-semibold">
                       {item.empresa} — {item.cargo}
                     </h3>
-                    <p className="text-sm text-blue-700">{item.periodo}</p>
-                    <p className="text-gray-700">{item.descricao}</p>
+                    <p className="text-sm">{item.periodo}</p>
+                    <p>{item.descricao}</p>
                   </div>
                 ))}
               </section>
@@ -116,16 +238,16 @@ const Curriculum = ({ dadosCurriculo, imageShape }: any) => {
 
             {formacoes.length > 0 && (
               <section>
-                <h2 className="text-2xl font-semibold border-b-2 border-blue-300 pb-2 mb-4 flex items-center">
+                <h2 className="text-2xl font-semibold border-b-2 border-opacity-30 pb-2 mb-4 flex items-center">
                   <FaUserGraduate className="mr-2" />
-                  Formação Acadêmica
+                  Formação Acadêmica:
                 </h2>
                 {formacoes.map((item: any, idx: number) => (
                   <div key={idx} className="mb-4">
                     <h3 className="text-lg font-semibold">
                       {item.instituicao}
                     </h3>
-                    <p className="text-sm text-blue-700">
+                    <p className="text-sm">
                       {item.curso} — {item.anoConclusao}
                     </p>
                   </div>
@@ -136,11 +258,10 @@ const Curriculum = ({ dadosCurriculo, imageShape }: any) => {
         </div>
 
         <div className="h-10"></div>
-
         <div className="flex justify-center mb-8">
           <button
             id="btn-pdf"
-            className="bg-blue-600 text-white px-8 py-3 rounded-lg hover:bg-blue-700 transition"
+            className="bg-black text-white px-8 py-3 rounded-lg hover:opacity-90 transition duration-200 ease-in-out"
             onClick={handleEdit}
           >
             Editar Currículo

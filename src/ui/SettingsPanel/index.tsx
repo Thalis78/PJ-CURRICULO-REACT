@@ -1,29 +1,28 @@
 import { useState, useEffect } from "react";
+
 declare var html2pdf: any;
 
-const SettingsPanel = ({
-  imageShape,
-  setImageShape,
-}: {
-  imageShape: string;
-  setImageShape: (value: string) => void;
-}) => {
+type SettingsPanelProps = {
+  themeColor: string;
+  setThemeColor: (color: string) => void;
+};
+
+const SettingsPanel = ({ themeColor, setThemeColor }: SettingsPanelProps) => {
   const [fontSize, setFontSize] = useState("16");
-  const [font, setFont] = useState("font-inter");
+  const [font, setFont] = useState("font-bebas");
   const [pdfName, setPdfName] = useState("curriculo");
   const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
     const fontMap: any = {
-      "font-inter": "Inter, sans-serif",
-      "font-georgia": "Georgia, serif",
       "font-playfair": "'Playfair Display', serif",
-      "font-arial": "Arial, sans-serif",
-      "font-times": "'Times New Roman', Times, serif",
       "font-roboto": "'Roboto', sans-serif",
-      "font-lato": "'Lato', sans-serif",
-      "font-merriweather": "'Merriweather', serif",
       "font-montserrat": "'Montserrat', sans-serif",
+      "font-lora": "'Lora', serif",
+      "font-raleway": "'Raleway', sans-serif",
+      "font-poppins": "'Poppins', sans-serif",
+      "font-bebas": "'Bebas Neue', cursive",
+      "font-open-sans": "'Open Sans', sans-serif",
     };
 
     const content = document.getElementById("pdf-content");
@@ -91,7 +90,7 @@ const SettingsPanel = ({
       <div className="absolute top-0 right-0 mr-4 mt-4">
         <button
           onClick={toggleSettings}
-          className="flex items-center text-gray-600 hover:text-blue-600 focus:outline-none p-3 rounded-full shadow-md transition-all duration-200 ease-in-out"
+          className="flex items-center text-black p-3 rounded-full shadow-md transition-all duration-200 ease-in-out"
         >
           {isOpen ? (
             <>
@@ -141,15 +140,14 @@ const SettingsPanel = ({
             onChange={(e) => setFont(e.target.value)}
             value={font}
           >
-            <option value="font-inter">Inter</option>
-            <option value="font-georgia">Georgia</option>
-            <option value="font-playfair">Playfair Display</option>
-            <option value="font-arial">Arial</option>
-            <option value="font-times">Times New Roman</option>
+            <option value="font-bebas">Bebas Neue</option>
             <option value="font-roboto">Roboto</option>
-            <option value="font-lato">Lato</option>
-            <option value="font-merriweather">Merriweather</option>
             <option value="font-montserrat">Montserrat</option>
+            <option value="font-lora">Lora</option>
+            <option value="font-raleway">Raleway</option>
+            <option value="font-poppins">Poppins</option>
+            <option value="font-playfair">Playfair Display</option>
+            <option value="font-open-sans">Open Sans</option>
           </select>
         </div>
 
@@ -188,30 +186,41 @@ const SettingsPanel = ({
           />
         </div>
 
-        <div className="flex flex-col lg:flex-row items-center justify-between col-span-full mt-4">
-          <div className="flex flex-col w-full sm:w-1/2 lg:w-auto">
-            <label
-              htmlFor="imageShape"
-              className="text-sm font-semibold text-gray-700 mb-2"
-            >
-              Formato da Imagem
-            </label>
-            <select
-              id="imageShape"
-              className="border border-gray-300 rounded-lg px-4 py-3 text-sm focus:ring-2 focus:ring-blue-500"
-              onChange={(e) => setImageShape(e.target.value)}
-              value={imageShape}
-            >
-              <option value="round">Redonda</option>
-              <option value="square">Quadrada</option>
-              <option value="none">Sem Imagem</option>
-            </select>
-          </div>
+        <div className="flex flex-col">
+          <label
+            htmlFor="themeColor"
+            className="text-sm font-semibold text-gray-700 mb-2"
+          >
+            Cor do Tema
+          </label>
+          <select
+            id="themeColor"
+            className="border border-gray-300 rounded-lg px-4 py-3 text-sm focus:ring-2 focus:ring-blue-500"
+            onChange={(e) => setThemeColor(e.target.value)}
+            value={themeColor}
+          >
+            <option value="bçacl">Preto</option>
+            <option value="pink">Rosa</option>
+            <option value="green">Verde</option>
+            <option value="yellow">Amarelo</option>
+            <option value="blue">Azul</option>
+            <option value="purple">Roxo</option>
+            <option value="orange">Laranja</option>
+            <option value="gray">Cinza</option>
+            <option value="red">Vermelho</option>
+            <option value="indigo">Índigo</option>
+            <option value="teal">Verde-azulado</option>
+            <option value="cyan">Ciano</option>
+            <option value="lime">Limão</option>
+            <option value="rose">Rosa claro</option>
+          </select>
+        </div>
 
+        <div className="flex flex-col lg:flex-row items-center justify-between col-span-full mt-4">
           <div className="flex justify-center sm:justify-end items-center mt-4 lg:mt-0 lg:ml-4">
             <button
               id="btn-pdf"
-              className="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 shadow-md transition duration-200 ease-in-out"
+              className="bg-black text-white px-8 py-3 rounded-lg hover:opacity-90 transition duration-200 ease-in-out"
               onClick={handlePdf}
             >
               📄 Salvar como PDF
