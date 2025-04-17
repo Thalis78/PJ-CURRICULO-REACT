@@ -2,6 +2,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { Modal } from "../../ui/modal";
 import { Header } from "../../ui/header";
+import { FaArrowLeft } from "react-icons/fa";
 
 const EditCurriculum = () => {
   const { state } = useLocation();
@@ -13,6 +14,10 @@ const EditCurriculum = () => {
   >(null);
   const [showModal, setShowModal] = useState<boolean>(false);
   const [currentAction, setCurrentAction] = useState<any>(null);
+
+  const handleBack = () => {
+    navigate("/");
+  };
 
   useEffect(() => {
     if (!curriculum) navigate("/");
@@ -118,8 +123,13 @@ const EditCurriculum = () => {
     <>
       <Header />
       <div className="h-10"></div>
-
       <div className="container mx-auto p-8 max-w-3xl bg-white rounded-xl shadow-xl">
+        <button
+          onClick={handleBack}
+          className="flex items-center bg-gray-800 text-white px-6 py-3 rounded-lg hover:bg-gray-700 transition duration-300 ease-in-out"
+        >
+          <FaArrowLeft className="mr-2" /> Voltar
+        </button>
         <h1 className="text-4xl font-bold text-center text-gray-900 mb-8">
           Editar Currículo
         </h1>
