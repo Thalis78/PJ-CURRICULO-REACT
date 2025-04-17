@@ -130,6 +130,7 @@ const EditCurriculum = () => {
         >
           <FaArrowLeft className="mr-2" /> Voltar
         </button>
+        <div className="h-10"></div>
         <h1 className="text-4xl font-bold text-center text-gray-900 mb-8">
           Editar Currículo
         </h1>
