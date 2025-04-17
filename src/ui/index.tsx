@@ -1,4 +1,6 @@
 import { useNavigate } from "react-router-dom";
+declare var html2pdf: any;
+
 import {
   FaEnvelope,
   FaRegHandshake,
@@ -8,6 +10,7 @@ import {
   FaMapMarkerAlt,
   FaAngleRight,
 } from "react-icons/fa";
+import { useState } from "react";
 
 type CurriculumProps = {
   dadosCurriculo: any;
@@ -119,6 +122,8 @@ const themeClasses: Record<string, any> = {
 const Curriculum = ({ dadosCurriculo, themeColor }: CurriculumProps) => {
   const navigate = useNavigate();
 
+  const [pdfName, setPdfName] = useState("curriculo");
+
   const handleEdit = () => {
     navigate("/edit", { state: { curriculo: dadosCurriculo } });
   };
@@ -137,6 +142,54 @@ const Curriculum = ({ dadosCurriculo, themeColor }: CurriculumProps) => {
   const objetivo = dadosCurriculo.objetivo || "";
 
   const theme = themeClasses[themeColor] || themeClasses.blue;
+
+  const handlePdf = () => {
+    const content = document.getElementById("pdf-content");
+    if (!content) return;
+
+    const printContainer = document.createElement("div");
+    const clone = content.cloneNode(true) as HTMLElement;
+
+    printContainer.appendChild(clone);
+    document.body.appendChild(printContainer);
+
+    printContainer.style.width = "794px";
+    printContainer.style.margin = "0 auto";
+    printContainer.style.padding = "20px";
+    printContainer.style.background = "white";
+
+    clone.style.width = "100%";
+    clone.style.boxSizing = "border-box";
+
+    const fixedHeight = 1000;
+
+    clone.style.minHeight = `${fixedHeight}px`;
+
+    const isMobile = window.innerWidth <= 800;
+
+    html2pdf()
+      .set({
+        margin: 0,
+        filename: `${pdfName}.pdf`,
+        image: { type: "jpeg", quality: 1 },
+        html2canvas: {
+          scale: 2,
+          scrollY: 0,
+          windowWidth: isMobile ? 794 : window.innerWidth,
+          windowHeight: fixedHeight,
+        },
+        jsPDF: {
+          unit: "mm",
+          format: "a4",
+          orientation: "portrait",
+        },
+      })
+      .from(printContainer)
+      .save()
+      .then(() => {
+        printContainer.remove();
+      });
+  };
 
   return (
     <div className="min-h-screen  py-8 px-6 sm:px-8">
@@ -258,13 +311,20 @@ const Curriculum = ({ dadosCurriculo, themeColor }: CurriculumProps) => {
         </div>
 
         <div className="h-10"></div>
-        <div className="flex justify-center mb-8">
+        <div className="flex justify-center mb-8 space-x-4">
           <button
-            id="btn-pdf"
+            id="btn-pdf-edit"
             className="bg-black text-white px-8 py-3 rounded-lg hover:opacity-90 transition duration-200 ease-in-out"
             onClick={handleEdit}
           >
-            Editar Currículo
+            ✏️ Editar Currículo
+          </button>
+          <button
+            id="btn-pdf"
+            className="bg-black text-white px-8 py-3 rounded-lg hover:opacity-90 transition duration-200 ease-in-out"
+            onClick={handlePdf}
+          >
+            📄 Salvar como PDF
           </button>
         </div>
       </div>

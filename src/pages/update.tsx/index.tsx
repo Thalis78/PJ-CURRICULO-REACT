@@ -1,5 +1,6 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
+import { Modal } from "../../ui/modal";
 
 const EditCurriculum = () => {
   const { state } = useLocation();
@@ -9,6 +10,8 @@ const EditCurriculum = () => {
   const [expandedSectionIndex, setExpandedSectionIndex] = useState<
     number | null
   >(null);
+  const [showModal, setShowModal] = useState<boolean>(false);
+  const [currentAction, setCurrentAction] = useState<any>(null);
 
   useEffect(() => {
     if (!curriculum) navigate("/");
@@ -85,9 +88,14 @@ const EditCurriculum = () => {
   };
 
   const handleRemoveItem = (sectionIndex: number, entryIndex: number) => {
-    const updatedSections = [...curriculum.secoes];
-    updatedSections[sectionIndex].itens.splice(entryIndex, 1);
-    setCurriculum({ ...curriculum, secoes: updatedSections });
+    setCurrentAction(() => () => {
+      const updatedSections = [...curriculum.secoes];
+      updatedSections[sectionIndex].itens.splice(entryIndex, 1);
+      setCurriculum({ ...curriculum, secoes: updatedSections });
+      setShowModal(false);
+    });
+
+    setShowModal(true);
   };
 
   const toggleSection = (index: number) => {
@@ -187,7 +195,7 @@ const EditCurriculum = () => {
       {curriculum.secoes.map((section: any, sectionIndex: number) => (
         <div key={sectionIndex}>
           <div
-            className="bg-gray-100 px-6 py-3 font-semibold cursor-pointer flex justify-between items-center rounded-xl shadow-lg hover:bg-gray-200 transition-all"
+            className="bg-gray-100  mb-8 px-6 py-3 font-semibold cursor-pointer flex justify-between items-center rounded-xl shadow-lg hover:bg-gray-200 transition-all"
             onClick={() => toggleSection(sectionIndex)}
           >
             <span className="text-gray-900 text-lg">{section.titulo}</span>
@@ -393,6 +401,14 @@ const EditCurriculum = () => {
       >
         Salvar Currículo
       </button>
+
+      {showModal && (
+        <Modal
+          message="Tem certeza de que deseja remover este item?"
+          onCancel={() => setShowModal(false)}
+          onConfirm={currentAction}
+        />
+      )}
     </div>
   );
 };
