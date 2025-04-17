@@ -10,7 +10,6 @@ import {
   FaMapMarkerAlt,
   FaAngleRight,
 } from "react-icons/fa";
-import { useState } from "react";
 
 type CurriculumProps = {
   dadosCurriculo: any;
