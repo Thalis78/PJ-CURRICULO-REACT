@@ -46,13 +46,6 @@ const themeClasses: Record<string, any> = {
     mainText: "text-green-900",
     buttonBg: "bg-green-600",
   },
-  yellow: {
-    sidebarBg: "bg-yellow-400",
-    sidebarText: "text-black",
-    mainBg: "bg-yellow-50",
-    mainText: "text-yellow-900",
-    buttonBg: "bg-yellow-500",
-  },
   purple: {
     sidebarBg: "bg-purple-600",
     sidebarText: "text-white",
