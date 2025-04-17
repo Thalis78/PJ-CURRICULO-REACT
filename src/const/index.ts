@@ -65,26 +65,5 @@ export const defaultCurriculo = {
         "API RESTful",
       ],
     },
-    {
-      titulo: "Certificados",
-      tipo: "certificados",
-      itens: [
-        {
-          titulo: "Node.js Avançado",
-          instituicao: "Rocketseat",
-          ano: 2023,
-        },
-        {
-          titulo: "React Developer",
-          instituicao: "Udemy",
-          ano: 2022,
-        },
-        {
-          titulo: "Docker e Kubernetes na Prática",
-          instituicao: "Alura",
-          ano: 2021,
-        },
-      ],
-    },
   ],
 };

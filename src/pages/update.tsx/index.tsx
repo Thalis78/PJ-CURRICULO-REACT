@@ -345,51 +345,6 @@ const EditCurriculum = () => {
                         />
                       </>
                     )}
-
-                    {section.tipo === "certificados" && (
-                      <>
-                        <input
-                          className="p-4 border border-gray-300 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-                          placeholder="Título"
-                          value={item.titulo}
-                          onChange={(e) =>
-                            handleItemChange(
-                              sectionIndex,
-                              entryIndex,
-                              "titulo",
-                              e.target.value
-                            )
-                          }
-                        />
-                        <input
-                          className="p-4 border border-gray-300 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-                          placeholder="Instituição"
-                          value={item.instituicao}
-                          onChange={(e) =>
-                            handleItemChange(
-                              sectionIndex,
-                              entryIndex,
-                              "instituicao",
-                              e.target.value
-                            )
-                          }
-                        />
-                        <input
-                          className="p-4 border border-gray-300 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-                          placeholder="Ano"
-                          value={item.ano}
-                          onChange={(e) =>
-                            handleItemChange(
-                              sectionIndex,
-                              entryIndex,
-                              "ano",
-                              e.target.value
-                            )
-                          }
-                        />
-                      </>
-                    )}
-
                     <div className="flex justify-between items-center">
                       <button
                         onClick={() =>
