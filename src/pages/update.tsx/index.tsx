@@ -2,7 +2,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { Modal } from "../../ui/modal";
 import { Header } from "../../ui/header";
-import { FaArrowLeft } from "react-icons/fa";
+import { FaArrowLeft, FaSave } from "react-icons/fa";
 
 const EditCurriculum = () => {
   const { state } = useLocation();
@@ -126,7 +126,7 @@ const EditCurriculum = () => {
       <div className="container mx-auto p-8 max-w-3xl bg-white rounded-xl shadow-xl">
         <button
           onClick={handleBack}
-          className="flex items-center bg-gray-800 text-white px-6 py-3 rounded-lg hover:bg-gray-700 transition duration-300 ease-in-out"
+          className="flex items-center text-white bg-black px-6 py-3 rounded-lg hover:bg-gray-700 transition duration-300 ease-in-out"
         >
           <FaArrowLeft className="mr-2" /> Voltar
         </button>
@@ -415,9 +415,9 @@ const EditCurriculum = () => {
 
         <button
           onClick={handleSave}
-          className="block mx-auto mt-6 px-8 py-3 text-lg text-white bg-blue-600 rounded-xl shadow-md hover:bg-blue-500 transition-all"
+          className="flex items-center justify-center mx-auto mt-6 px-8 py-3 text-lg text-white bg-black rounded-xl shadow-lg hover:bg-gray-800 transition-all duration-300 ease-in-out transform hover:scale-105"
         >
-          Salvar Currículo
+          <FaSave className="mr-3 text-xl" /> Salvar Currículo
         </button>
 
         {showModal && (
@@ -428,6 +428,7 @@ const EditCurriculum = () => {
           />
         )}
       </div>
+      <div className="h-10"></div>
     </>
   );
 };
